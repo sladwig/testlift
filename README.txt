@@ -28,7 +28,9 @@ Testing Lift
 ============
 $ mvn jetty:run
 
-$ ab -c 10 -n 10000 http://localhost:8080/
+(I got the jsessionid by making an request to the server and then reading out the cookie. I also made more than 100.000 requests before the test.)
+
+$ ab -c 10 -n 10000 -C JSESSIONID=n8ehmams4txp http://localhost:8080/
 This is ApacheBench, Version 2.3 <$Revision: 655654 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -52,38 +54,39 @@ Server Hostname:        localhost
 Server Port:            8080
 
 Document Path:          /
-Document Length:        684 bytes
+Document Length:        651 bytes
 
 Concurrency Level:      10
-Time taken for tests:   28.543 seconds
+Time taken for tests:   5.435 seconds
 Complete requests:      10000
-Failed requests:        9866
-   (Connect: 0, Receive: 0, Length: 9866, Exceptions: 0)
+Failed requests:        0
 Write errors:           0
-Total transferred:      10191438 bytes
-HTML transferred:       6856071 bytes
-Requests per second:    350.35 [#/sec] (mean)
-Time per request:       28.543 [ms] (mean)
-Time per request:       2.854 [ms] (mean, across all concurrent requests)
-Transfer rate:          348.69 [Kbytes/sec] received
+Total transferred:      9400000 bytes
+HTML transferred:       6510000 bytes
+Requests per second:    1839.76 [#/sec] (mean)
+Time per request:       5.435 [ms] (mean)
+Time per request:       0.544 [ms] (mean, across all concurrent requests)
+Transfer rate:          1688.84 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    0   0.4      0       9
-Processing:     2   28  74.1      6     360
-Waiting:        1   27  73.2      6     360
-Total:          2   28  74.1      6     361
+Connect:        0    0   0.2      0       2
+Processing:     1    5  15.4      2     295
+Waiting:        0    5  15.1      2     295
+Total:          1    5  15.4      3     295
 
 Percentage of the requests served within a certain time (ms)
-  50%      6
-  66%      8
-  75%     10
-  80%     11
-  90%     16
-  95%    263
-  98%    311
-  99%    321
- 100%    361 (longest request)
+  50%      3
+  66%      4
+  75%      5
+  80%      5
+  90%      7
+  95%      8
+  98%     52
+  99%     53
+ 100%    295 (longest request)
+
+
 
 
 
@@ -119,47 +122,42 @@ Document Path:          /
 Document Length:        656 bytes
 
 Concurrency Level:      10
-Time taken for tests:   16.718 seconds
+Time taken for tests:   17.235 seconds
 Complete requests:      10000
 Failed requests:        0
 Write errors:           0
-Total transferred:      9171858 bytes
-HTML transferred:       6561312 bytes
-Requests per second:    598.17 [#/sec] (mean)
-Time per request:       16.718 [ms] (mean)
-Time per request:       1.672 [ms] (mean, across all concurrent requests)
-Transfer rate:          535.77 [Kbytes/sec] received
+Total transferred:      9173690 bytes
+HTML transferred:       6562624 bytes
+Requests per second:    580.21 [#/sec] (mean)
+Time per request:       17.235 [ms] (mean)
+Time per request:       1.724 [ms] (mean, across all concurrent requests)
+Transfer rate:          519.79 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
 Connect:        0    0   0.1      0       1
-Processing:     2   16  12.4     12      75
-Waiting:        1   16  12.3     12      66
-Total:          2   17  12.4     13      75
+Processing:     2   17  12.7     13      69
+Waiting:        1   17  12.7     13      69
+Total:          2   17  12.7     13      69
 
 Percentage of the requests served within a certain time (ms)
   50%     13
   66%     13
   75%     13
-  80%     13
-  90%     25
-  95%     54
-  98%     55
-  99%     56
- 100%     75 (longest request)
+  80%     14
+  90%     24
+  95%     56
+  98%     57
+  99%     57
+ 100%     69 (longest request)
 
 
 
-The surprising stuff
-====================
-1. Requests per second:
-Lift : 343.92 [#/sec] (mean)
-Rails: 598.17 [#/sec] (mean)
 
-That's ~73 % more Requests.
+Result
+======
+Requests per second:
+Lift:  1839
+Rails:  580
 
-
-2. Percentage of the requests served within a certain time (ms)
-Lift :  95%    269
-Rails: 100%     75
-
+That’s a plus of ~317%
